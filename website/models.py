@@ -39,4 +39,12 @@ class Item(models.Model):
         return self.name
 
 
+class Purchase(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    buyer = models.ForeignKey(Record, related_name="purchase", on_delete=models.CASCADE)
+    date = models.DateField()
+    items = models.ManyToManyField(Item)
 
+    def __str__(self):
+        return self.buyer.first_name
+    
