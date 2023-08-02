@@ -33,7 +33,6 @@ class Item(models.Model):
     category = models.ForeignKey(Category, related_name="items", on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     price = models.FloatField()
-    image = models.ImageField(upload_to='item_images', blank=True, null=True)
     created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE)
 
     def __str__(self):
