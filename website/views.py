@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignUpForm,AddRecordForm
-from .models import Record
+from .models import Record,Category,Item,Purchase
 
 def home(request):
     records = Record.objects.all()
@@ -19,6 +19,14 @@ def home(request):
         else : 
             messages.success(request, 'Sorry there was an error while logging in. Please try again...')
     return render(request, 'home.html',{'records': records})
+
+def purchases(request):
+    purchases = Purchase.objects.all()
+    if request.user.is_authenticated:
+        return render(request, 'purchases.html',{'purchases':purchases})   
+    else:
+        messages.success(request, "You must be logged in to view that page...")
+        return redirect('home')
 
 def logout_user(request):
     logout(request)

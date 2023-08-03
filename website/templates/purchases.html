@@ -1,0 +1,43 @@
+{% extends 'base.html '%}
+{% block content %}
+<div class="container my-4">
+    {% if  user.is_authenticated %}
+        <h2 class="text-center">Purchases </h2>
+            {% if purchases %}
+                <table class="table my-4">
+                    <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Buyer</th>
+                        <th scope="col">Items</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for purchase in purchases %}
+                        <tr>
+                            <td>{{purchase.date}}</td>
+                            <td>{{purchase.buyer}}</td>
+                            <td>{% for item in purchase.items.all %}{{ item.name}}, {% endfor %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>            
+            {% endif %}
+    {% else %}
+        <div class="py-4 px-4 col-md-6 offset-md-3" style="border: 1px solid black; border-radius: 4px;">
+            <h3 class="text-center mb-4">Login Here</h3>
+            <form method="POST" action="{% url 'home'%}">
+                {% csrf_token %}
+                <div class="mb-3">
+                <input type="text" class="form-control" id="uname" name="uname" placeholder="Username" required>
+                </div>
+                <div class="mb-3">
+                <input type="password" class="form-control" id="upassword" name="upassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-dark">Login</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+    
+{% endblock  %}
